@@ -14,4 +14,4 @@ Build and bundle
 npm run build
 ```
 
-Then copy the build folder to ccsAnnotator/inst and rename it to ccs-annotator-client
+Then copy the build folder into ccsAnnotator/inst/ccs-annotator-client/
