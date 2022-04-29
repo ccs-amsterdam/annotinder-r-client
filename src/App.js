@@ -1,57 +1,35 @@
-import React, { useEffect, useState } from "react";
-
-// Main pages. Use below in items to include in header menu
-import Annotator, { Backend, JobServerAPI } from "ccs-annotator-client";
-import { Grid, Header, Icon } from "semantic-ui-react";
-
+import React, { useState, useEffect } from "react";
+import { AnnotatorRClient } from "ccs-annotator-client";
 import "style.css";
 
-const PORT = 8000;
-const TRY_EVERY = 1000;
-
 const App = () => {
-  // A simple client that just looks for a backend on the host
-  // Assumes only 1 job (with job_id = 0 or just ignored in backend)
-  const [jobServer, setJobServer] = useState(null);
+  const [size, setSize] = useState({
+    height: window.innerHeight,
+    width: document.documentElement.clientWidth,
+  });
 
   useEffect(() => {
-    if (jobServer) return null;
+    // use window.innerHeight for height, because vh on mobile is weird (can include the address bar)
+    // use document.documentElement.clientwidth for width, to exclude the scrollbar
+    const onResize = () => {
+      setSize({
+        height: window.innerHeight,
+        width: document.documentElement.clientWidth,
+      });
+    };
+    window.addEventListener("resize", onResize);
+    window.screen.orientation.addEventListener("change", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.screen.orientation.removeEventListener("change", onResize);
+    };
+  });
 
-    const interval = setInterval(() => {
-      login(setJobServer);
-    }, TRY_EVERY);
-
-    return () => clearInterval(interval);
-  }, [jobServer, setJobServer]);
-
-  if (!jobServer) {
-    return (
-      <Grid inverted textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
-        <Grid.Column style={{ maxWidth: "500px" }}>
-          <Icon
-            name="sync"
-            size="huge"
-            style={{
-              animation: "rotation 5s infinite linear",
-            }}
-          />
-          <Header>{`Connecting to port ${PORT}. If this takes forever, please make sure the server is actually running`}</Header>
-        </Grid.Column>
-      </Grid>
-    );
-  }
-
-  return <Annotator jobServer={jobServer} />;
-};
-
-const login = async (setJobServer) => {
-  try {
-    const backend = new Backend("http://localhost:" + PORT, null);
-    await backend.init();
-    const js = new JobServerAPI(backend, 0, setJobServer);
-    await js.init();
-    setJobServer(js);
-  } catch (e) {}
+  return (
+    <div style={{ height: `${size.height}px`, width: `${size.width}px` }}>
+      <AnnotatorRClient />
+    </div>
+  );
 };
 
 export default App;
