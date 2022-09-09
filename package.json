@@ -1,5 +1,5 @@
 {
-  "name": "ccs-annotator-client-r",
+  "name": "annotinder-r-client",
   "homepage": ".",
   "description": "For creating a bundle to use in an R package",
   "author": "Kasper Welbers",
@@ -10,7 +10,7 @@
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ccs-amsterdam/ccs-annotator-client-r"
+    "url": "https://github.com/ccs-amsterdam/annotinder-r-client"
   },
   "license": "MIT",
   "main": "dist/index.js",
@@ -21,10 +21,9 @@
   ],
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
-    "ccs-annotator-client": "^0.1.26",
-    "core-js": "^3.20.3",
-    "react": "^18.0.0",
-    "react-scripts": "^5.0.0",
+    "@semantic-ui-react/css-patch": "^1.1.2",
+    "annotinder-client": "0.3.9",
+    "react": "^18.2.0",
     "semantic-ui-css": "^2.4.1"
   },
   "scripts": {
@@ -56,5 +55,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "react-scripts": "^5.0.0"
+  }
 }
