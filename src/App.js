@@ -1,10 +1,12 @@
 import React from "react";
 import { AnnotatorRClient, ResponsiveContainer } from "annotinder-client";
-import "./style.css";
+import { GlobalStyle } from "annotinder-client";
 
 const App = () => {
   return (
     <ResponsiveContainer>
+      <GlobalStyle />
+
       <AnnotatorRClient />
     </ResponsiveContainer>
   );
